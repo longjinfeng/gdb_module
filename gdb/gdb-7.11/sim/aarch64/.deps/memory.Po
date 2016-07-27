@@ -1,0 +1,113 @@
+memory.o: memory.c config.h ../../bfd/bfd.h ../../include/ansidecl.h \
+ ../../include/symcat.h ../../bfd/libbfd.h ../../include/hashtab.h \
+ ../../include/ansidecl.h ../../include/libiberty.h \
+ ../../include/elf/internal.h ../../include/elf/common.h memory.h \
+ simulator.h sim-main.h ../common/sim-basics.h config.h \
+ ../../include/gdb/callback.h ../../include/gdb/remote-sim.h \
+ ../common/sim-config.h ../common/sim-inline.h ../common/sim-types.h \
+ ../common/sim-bits.h ../common/sim-endian.h ../common/sim-signal.h \
+ ../../include/gdb/signals.h ../../include/gdb/signals.def \
+ ../common/sim-arange.h ../common/sim-arange.c ../common/sim-basics.h \
+ ../common/sim-assert.h ../common/sim-io.h ../common/sim-utils.h \
+ ../common/sim-types.h ../common/sim-base.h ../common/sim-module.h \
+ ../common/sim-trace.h ../../include/dis-asm.h ../common/sim-core.h \
+ ../common/sim-events.h ../common/sim-profile.h ../common/sim-model.h \
+ ../common/sim-engine.h ../common/sim-watch.h ../common/sim-memopt.h \
+ ../common/sim-cpu.h ../common/sim-io.h cpustate.h decode.h \
+ ../common/sim-core.h
+
+config.h:
+
+../../bfd/bfd.h:
+
+../../include/ansidecl.h:
+
+../../include/symcat.h:
+
+../../bfd/libbfd.h:
+
+../../include/hashtab.h:
+
+../../include/ansidecl.h:
+
+../../include/libiberty.h:
+
+../../include/elf/internal.h:
+
+../../include/elf/common.h:
+
+memory.h:
+
+simulator.h:
+
+sim-main.h:
+
+../common/sim-basics.h:
+
+config.h:
+
+../../include/gdb/callback.h:
+
+../../include/gdb/remote-sim.h:
+
+../common/sim-config.h:
+
+../common/sim-inline.h:
+
+../common/sim-types.h:
+
+../common/sim-bits.h:
+
+../common/sim-endian.h:
+
+../common/sim-signal.h:
+
+../../include/gdb/signals.h:
+
+../../include/gdb/signals.def:
+
+../common/sim-arange.h:
+
+../common/sim-arange.c:
+
+../common/sim-basics.h:
+
+../common/sim-assert.h:
+
+../common/sim-io.h:
+
+../common/sim-utils.h:
+
+../common/sim-types.h:
+
+../common/sim-base.h:
+
+../common/sim-module.h:
+
+../common/sim-trace.h:
+
+../../include/dis-asm.h:
+
+../common/sim-core.h:
+
+../common/sim-events.h:
+
+../common/sim-profile.h:
+
+../common/sim-model.h:
+
+../common/sim-engine.h:
+
+../common/sim-watch.h:
+
+../common/sim-memopt.h:
+
+../common/sim-cpu.h:
+
+../common/sim-io.h:
+
+cpustate.h:
+
+decode.h:
+
+../common/sim-core.h:
