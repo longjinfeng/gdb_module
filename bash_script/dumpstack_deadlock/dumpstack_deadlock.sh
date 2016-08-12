@@ -6,31 +6,34 @@ pmedia_process="android.process.media"
 ptvservice="com.mstar.tv.service"
 pcomletvxx="com.letv.*"
 pcomstvxx="com.stv.*"
-
+mount_point=
 
 #********Judge whether have anr**********#
 is_anr()
 {
-  file_an=`ls $log_path | grep anr`
+  file_anr=`ls $log_path |busybox grep anr`
 
-  if [ "$file_anr" != "" ];then
-      return 1
+  if [[ "$file_anr" != "" ]];then
+      echo 1
+  else
+      echo 0
   fi
 
-  return 0
 }
 
 #**Judge the traces.txt whether deadlock*#
 is_deadlock()
 {
-  log_path_anr=$log_path."/anr"
-  lock_fail_str=`ls log_path_anr | busybox xargs grep -E MsOS_LockMutex|__pthread_mutex_lock_with_timeout`
+  log_path_anr="$log_path""/anr"
   
-  if [ "$lock_fail_str" != "" ];then
-	return 1
-  fi  
+  lock_fail_str=`find $log_path_anr -name traces* -type f -exec grep -E 'MsOS_LockMutex|pthread_mutex_lock_with_timeout' {} \;`
+  
+  if [[ "$lock_fail_str" != "" ]];then
+	echo 1
+  else
+        echo 0
+  fi
 
-  return 0
 }
 
 #*******Get the processes pids**********#
@@ -43,6 +46,7 @@ get_some_pids()
 
   dumppids=`cat /tmp/dumpstack.txt | busybox awk -F" " '{print $2}'`
 
+  echo "PIDs are $dumppids"
   rm -rf /tmp/dumpstack.txt
 }
 
@@ -50,9 +54,11 @@ get_some_pids()
 dumpstack()
 { 
   oldIFS=$IFS
-  IFS="\n"
+  IFS='
+  '
   for tmp in $dumppids
   do
+    echo "pid is $tmp"
     debuggerd -b $tmp>> /data/dumpallstack.txt
   done	
 
@@ -62,7 +68,8 @@ dumpstack()
 #********get mount point*********#
 get_mount_point()
 {
-   mount_point= `mount | grep usb | busybox awk -F" " '{print $2}'`
+   mount_point=`mount | grep usb | busybox awk -F" " '{print $2}'`
+   echo $mount_point
 }
 
 #********************************#
@@ -73,16 +80,22 @@ f_looper()
   while true
   do
     sleep 4
-    
-    is_anr
-    if [ $? == 1 ];then
-	is_deadlock
-	if [ $? == 1 ];then
+    echo "in the dumpallstack while looper"   
+    tmp=$(is_anr)
+    echo $tmp
+    if [ "$tmp" == "1" ];then
+        echo "Got a anr in the logs"
+        log_path_anr="$log_path""/anr"
+        echo $log_path_anr
+	tmp=$(is_deadlock)
+	if [[ "$tmp" == "1" ]];then
+	  echo "Is deadlock"
 	  get_some_pids
           dumpstack
-	  get_mount_point
-          cp /data/dumpallstack.txt $mount_point
-	  return
+	  mount_point=$(get_mount_point)
+	  echo "aaaaaaaaaaaaaa $mount_point"
+          cp -f /data/dumpallstack.txt $mount_point
+	  break
 	fi
     fi
 
